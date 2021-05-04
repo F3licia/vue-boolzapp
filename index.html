@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>VueBoolzap</title>
+</head>
+
+<body>
+<div id="vueContainer">
+
+        <div class="main">
+            <div class="col-1">
+
+                <div class="main-bar">
+                     <img src="imgs/avatar_io.jpg" alt=""> 
+                </div>
+
+                <div class="notifications">
+                    <div class="bell"><i class="fa fa-bell-slash" aria-hidden="true"></i></div>
+                    <div>
+                        <h5>Ricevi notifiche di nuovi messaggi</h5>
+                        <h6>Attiva notifiche desktop</h6>
+                    </div>
+                </div>
+                <div class="searchBar">
+                     <input type="text" class="textbar" placeholder=" &#x1F50E;&#xFE0E; Cerca o inizia una nuova chat">
+                </div>
+
+
+                <div class="contacts">
+
+                    <div class="singleCont" v-for="(contact, name, pic) in ctcs" @click="openConvo(contact)" :class="{opened:contact === active}">
+                        <img v-bind:src="contact.pic" alt=""> {{contact.name}}
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="col-2 ">
+                     <div v-if="active" class="chatSpace">
+
+                        <div class="main-bar">
+                            <img :src="active.pic" alt="">
+                            <div class="name">{{active.name}}</div>
+                        </div>
+
+                        <div class="flex" v-for="element in active.convo" >
+                            <div class="triangle"></div>
+                            <div class="contactChat" >
+                                <h4>{{element.text}}</h4>
+                                <h6>{{element.status}}</h6>
+                            </div>
+                        </div>
+
+
+
+
+                    <div class="chat-bar">
+                       <div class="icon-chat-bar"><i class="fa fa-smile-o" aria-hidden="true"></i></div>
+                       <input type="text" class="textbar">
+                       <div class="icon-chat-bar"><i class="fa fa-microphone" aria-hidden="true"></i></div>
+                    </div>
+                         
+                </div>
+            </div>
+        </div>   
+    
+
+</div>
+<script src="script/myScript.js"></script>
+
+
+</body>
+</html>
+
+
+
+
