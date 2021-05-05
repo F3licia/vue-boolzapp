@@ -3,9 +3,12 @@ const app = new Vue(
     {
         el: '#vueContainer',
         data: {
-            active:"",
+            newMess:"",
+            active:{},
+            search:"",
+    
             ctcs:[
-                {name:"nome-1",
+                {name:"Michele",
                     pic:"imgs/avatar_1.jpg",
                     convo: [
                         {
@@ -24,26 +27,106 @@ const app = new Vue(
                             status: 'received'
                         }]
             },
-                {name:"nome-2", pic:"imgs/avatar_2.jpg"},
-                {name:"nome-3", pic:"imgs/avatar_3.jpg"},
-                {name:"nome-4", pic:"imgs/avatar_4.jpg"},
-                {name:"nome-5", pic:"imgs/avatar_5.jpg"},
-                {name:"nome-6", pic:"imgs/avatar_6.jpg"},
-                {name:"nome-7", pic:"imgs/avatar_7.jpg"},
-                {name:"nome-8", pic:"imgs/avatar_8.jpg"},
+                {name:"Fabio",
+                pic:"imgs/avatar_2.jpg",
+                convo:[
+                    {
+                        date: '28/03/2020 10:10:40',
+                        text: 'La Marianna va in campagna',
+                        status: 'received'
+                    },
+                    {
+                        date: '28/03/2020 10:20:10',
+                        text: 'Sicuro di non aver sbagliato chat?',
+                        status: 'sent'
+                    },
+                    {
+                        date: '28/03/2020 16:15:22',
+                        text: 'Ah scusa!',
+                        status: 'received'
+                    }
+                ]},
+
+                {name:"Gianni",
+                pic:"imgs/avatar_3.jpg",
+                convo:[
+                    {
+                        date: '20/03/2020 16:30:00',
+                        text: 'Ciao come stai?',
+                        status: 'sent'
+                    },
+                    {
+                        date: '20/03/2020 16:30:55',
+                        text: 'Bene grazie! Stasera ci vediamo?',
+                        status: 'received'
+                    },
+                    {
+                        date: '20/03/2020 16:35:00',
+                        text: 'Mi piacerebbe ma devo andare a fare la spesa.',
+                        status: 'sent'
+                    }
+                ]},
+
+                {name:"Franco",
+                pic:"imgs/avatar_4.jpg",
+                convo:[
+                    {
+                        date: '10/01/2020 15:30:55',
+                        text: 'Lo sai che ha aperto una nuova pizzeria?',
+                        status: 'sent'
+                    },
+                    {
+                        date: '10/01/2020 15:50:00',
+                        text: 'Si, ma preferirei andare al cinema',
+                        status: 'received'
+                    }
+                ]},
+
+                {name:"Mario",
+                pic:"imgs/avatar_5.jpg",
+                convo:[]},
+
+                {name:"Luisa",
+                pic:"imgs/avatar_6.jpg",
+                convo:[]},
+
+                {name:"Samuele",
+                pic:"imgs/avatar_7.jpg",
+                convo:[]},
+                {name:"Paolo",
+                pic:"imgs/avatar_8.jpg",
+                convo:[]},
             ],
 
         },
-   
-        methods: {   
+
+        methods:{
             openConvo(contact){  
-               this.active = contact;   
-            },
-            sentReceived(status){
+                this.active = contact;   
+                },
 
-          
-            },
-        }
-    }
-
-);
+                sendMess() {
+                    this.active.convo.push({
+                        date: 'now',
+                        text: this.newMess,
+                        status: 'sent'
+                    })
+                    setTimeout(()=> {     //LA FUNZIONE NORMALE NON MANTIENE IL THIS
+                        this.active.convo.push({
+                            date: 'now',
+                            text: "ok",
+                            status: 'received'
+                        })
+                    },1000)
+                return this.newMess ="" },
+        },
+       
+        computed: {
+                
+                filteredContacts:function(){
+                    return this.ctcs.filter((contact) => {
+                        return contact.name.match(this.search);
+                    });
+                }
+            }
+})
