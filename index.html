@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
@@ -44,24 +45,35 @@
             
             <div v-if="active" >
                 <div class="main-bar main-bar-2">
+                    
                     <img :src="active.pic" alt="">
-                    <div class="name">{{active.name}}</div>
+                    <div class="name">{{active.name}}
+                       
+                    </div>
+                       
                 </div>
             </div>
 
             <div class="col-2 ">
                 
                     <div v-if="active" class="chatSpace">
+
                         <div v-for="(element, status) in active.convo" >
-                            <div :class="{received:element.status === 'sent',
-                                        sent:element.status === 'received',}" >
-                                        <h5 class="message">{{element.text}}</h5>
-                                        <div class="infoMess">
-                                            <h6>{{element.status}}</h6>
-                                            <h6>{{element.date}}</h6>
-                                        </div>
+                            <div class="chat-row">
+
+                                    
+                                    <div :class="{sent:element.status === 'sent',
+                                            received:element.status === 'received',}" >
+                                               
+                                            
+                                            <h5 class="message">{{element.text}}</h5>
+                                            <div class="infoMess">
+                                                <h6>{{element.status}}&nbsp;</h6>
+                                                <h6>{{formatTime(element.date)}}</h6>
+                                            </div>
+                                           
+                                    </div>
                             </div>
-                            
                         </div>
 
 

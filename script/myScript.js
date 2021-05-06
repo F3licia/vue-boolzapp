@@ -107,18 +107,30 @@ const app = new Vue(
 
                 sendMess() {
                     this.active.convo.push({
-                        date: 'now',
+                        date: moment().format("DD/MM/YYYY HH:mm:ss"),
                         text: this.newMess,
                         status: 'sent'
                     })
                     setTimeout(()=> {     //LA FUNZIONE NORMALE NON MANTIENE IL THIS
                         this.active.convo.push({
-                            date: 'now',
+                            date: moment().format("DD/MM/YYYY HH:mm:ss"),
                             text: "ok",
                             status: 'received'
                         })
                     },1000)
                 return this.newMess ="" },
+                
+                formatTime(dataString){
+                    const dataFormString = moment(dataString, "DD/MM/YYYY HH:mm:ss")
+                    return dataFormString.format("HH:mm")
+
+                },
+
+                lastAccess(){
+                  // filtra convo per status , date ultimo oggetto 
+                    
+                }
+
         },
        
         computed: {
