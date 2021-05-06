@@ -61,18 +61,20 @@
                         <div v-for="(element, status) in active.convo" >
                             <div class="chat-row">
 
-                                    
-                                    <div :class="{sent:element.status === 'sent',
-                                            received:element.status === 'received',}" >
-                                               
-                                            
-                                            <h5 class="message">{{element.text}}</h5>
-                                            <div class="infoMess">
-                                                <h6>{{element.status}}&nbsp;</h6>
-                                                <h6>{{formatTime(element.date)}}</h6>
-                                            </div>
-                                           
-                                    </div>
+                                        <div @click="showOptions(element)" class="overlayClickableOptions" > </div> 
+                                        <div :class="{sent:element.status === 'sent',
+                                                received:element.status === 'received'}"  >                                 
+                                                
+                                                <h5 class="message">{{element.text}}</h5>
+                                                <div class="infoMess">
+                                                    <h6>{{element.status}}&nbsp;</h6>
+                                                    <h6>{{formatTime(element.date)}}</h6>
+                                                </div> 
+                                        </div>
+                                        <div v-if="element.showPopup">
+                                           Opzioni
+                                        </div>
+                                   
                             </div>
                         </div>
 

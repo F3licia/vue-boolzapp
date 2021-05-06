@@ -132,9 +132,6 @@
     }
 
     
-   
-
-
     .chat-row{
         margin: 10px 50px;
         position: relative;
@@ -204,4 +201,20 @@ margin-left: 30px;
 opacity: 60%;
 justify-content: space-between;
 display: flex;
+}
+
+
+
+.overlayClickableOptions{
+  position: absolute;
+  opacity: 0%;
+  width: 100%; 
+  height: 100%; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2; 
+  cursor: pointer; 
+}
 }
