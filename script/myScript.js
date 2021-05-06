@@ -15,19 +15,20 @@ const app = new Vue(
                             date: '13/08/2020 15:30:55',
                             text: 'Hai portato a spasso il cane?',
                             status: 'sent',
-                            showPopup: false
+                            showPopup: false,     
+
                         },
                         {
                             date: '10/01/2020 15:50:00',
                             text: 'Ricordati di dargli da mangiare',
                             status: 'sent',
-                            showPopup: false
+                            showPopup: false,
                         },
                         {
                             date: '10/01/2020 16:15:22',
                             text: 'Tutto fatto!',
                             status: 'received',
-                            showPopup: false
+                            showPopup: false,
                         }]
             },
                 {name:"Fabio",
@@ -37,19 +38,19 @@ const app = new Vue(
                         date: '28/03/2020 10:10:40',
                         text: 'La Marianna va in campagna',
                         status: 'received',
-                        showPopup: false
+                        showPopup: false,
                     },
                     {
                         date: '28/03/2020 10:20:10',
                         text: 'Sicuro di non aver sbagliato chat?',
                         status: 'sent',
-                        showPopup: false
+                        showPopup: false,
                     },
                     {
                         date: '28/03/2020 16:15:22',
                         text: 'Ah scusa!',
                         status: 'received',
-                        showPopup: false
+                        showPopup: false,
                     }
                 ]},
 
@@ -123,38 +124,65 @@ const app = new Vue(
                         status: 'sent',
                         showPopup: false
                     })
+                       
                     setTimeout(()=> {     //LA FUNZIONE NORMALE NON MANTIENE IL THIS
-                        this.active.convo.push({
+                        this.active.convo.push(
+                            {
                             date: moment().format("DD/MM/YYYY HH:mm:ss"),
                             text: "ok",
                             status: 'received',
                             showPopup: false
-                        })
-                    },1000)
-                return this.newMess ="" },
-                
+                            })
+                            this.scrollToBottom();
+                    },1000);
+                 return this.newMess ="";
+                 },
+
+                 //-----
+                 scrollToBottom(){  //ref = id vue
+                     setTimeout (()=> {
+                    const htmlElement = this.$refs.chatContainerToScroll;
+                    htmlElement.scrollTop = htmlElement.scrollHeight;
+                     }, 100);
+                 },//-----
+
                 formatTime(dataString){
                     const dataFormString = moment(dataString, "DD/MM/YYYY HH:mm:ss")
                     return dataFormString.format("HH:mm")
                 },
 
-                lastAccess(){
-                  // filtra convo per status , date ultimo oggetto 
-                    
-                },
-
+         
                 showOptions(element){
-                    element.showPopup = !element.showPopup;
-                      
-                  }
+                    element.showPopup = !element.showPopup;                    
+                  },
 
+                deleteItem(ToDelete) {      
+                  this.active.convo[ToDelete].text ="Questo messaggio è stato eliminato"               
+                  return  this.active.convo[ToDelete] = "";
+                },
         },
        
-        computed: {               
+        computed: {
+            
                 filteredContacts:function(){
                     return this.ctcs.filter((contact) => {
-                        return contact.name.match(this.search);
+                        return contact.name.toLowerCase().includes(this.search.toLowerCase());
                     });
-                }
+                },
+                       lastAccess(){         
+                            if(!this.active.convo ){
+                                return "";
+                            }
+                        const received = this.active.convo.filter(( msg ) => msg.satus = 'received'); // no '==='?
+
+                            if(received.length === 0 ){
+                                return "";
+                            }
+                        const lastMsgDate = received[received.length - 1].date;
+                            if(!lastMsgDate){
+                                return "";
+                            }
+                        return this.formatTime(lastMsgDate);
+                },
             }
 })
