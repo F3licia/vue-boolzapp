@@ -16,12 +16,14 @@
 
         <div class="main">
 
-            <div class="main-bar main-bar-1">
-                <img src="imgs/avatar_io.jpg" alt=""> 
-           </div>
-           
-            <div class="col-1">
+           <!--colonna 1 con contatti -->
+            <div class="col-1"> 
 
+                <div class="main-bar main-bar-1">         <!--barra principale -->
+                    <img src="imgs/avatar_io.jpg" alt=""> 
+                    <div class="icons"> icone </div>  
+               </div>
+               
                 <div class="notifications">
                     <div class="bell"><i class="fa fa-bell-slash" aria-hidden="true"></i></div>
                     <div>
@@ -30,41 +32,35 @@
                     </div>
                 </div>
                 <div class="searchBar">
-                     <input v-model="search" type="text" class="textbar" placeholder=" &#x1F50E;&#xFE0E; Cerca o inizia una nuova chat">
+                     <input v-model="search" type="text" class="textbarSearch generalTextBar" placeholder=" &#x1F50E;&#xFE0E; Cerca o inizia una nuova chat">
                 </div>
 
 
-                <div class="contacts">
-
+                <div class="contacts">  <!--inizio lista contatti con v-for -->
                     <div class="singleCont" v-for="(contact, name, pic) in filteredContacts"  @click="openConvo(contact)" :class="{opened:contact === active}">
                         <img v-bind:src="contact.pic" alt=""> {{contact.name}}
                     </div>
-
-                </div>
-            </div>
-            
-            <div v-if="active" >
-                <div class="main-bar main-bar-2">
-                    
-                    <img :src="active.pic" alt="">
-                    <div class="name">{{active.name}}
-                    <p v-if="lastAccess">Ultimo accesso {{lastAccess}}</p>
-                    </div>  
-                    
-                       
                 </div>
             </div>
 
-            <div class="col-2 ">
-                
-                    <div v-if="active" class="chatSpace" ref="chatContainerToScroll">
+            <!--seconda colonna -->
+            <div class="col-2 ">      
+                    <div v-if="active" class="relative">         <!--seconda barra principlae con info contatto selezionato-->
+                        <div class="main-bar main-bar-2">        
+                            <img :src="active.pic" alt="">
+                            <div class="name">{{active.name}}
+                            <p v-if="lastAccess">Ultimo accesso {{lastAccess}}</p>
+                            </div>
+                             <div class="icons"> icone </div>  
+                        </div>
+                    </div>
+
+                    <div class="chatSpace" ref="chatContainerToScroll">
 
                         <div v-for="(element,index ,status) in active.convo">
-                            <div class="chat-row">
-                                
-                                        
-                                        <div @click="showOptions(element)" :class="{sent:element.status === 'sent',
-                                                received:element.status === 'received'}"  >                                 
+                            <div class="chat-row relative">
+                                                                       
+                                        <div @click="showOptions(element)" v-bind:class="addClasses(element.status)" >                                 
                                                 
                                                 <h5 class="message">{{element.text}}</h5>
                                                 <div class="infoMess">
@@ -73,25 +69,20 @@
                                                 </div> 
                                         </div>
 
-                                        <div v-if="element.showPopup">
-
-                                            <button  v-on:click="deleteItem(index)">cancella</button>
-
-                                          </div>
-                                   
+                                        <div v-if="element.showPopup" v-bind:class="addClassesPopUp(element.status)">
+                                            <h5 v-on:click="deleteItem(index)">cancella</h5>
+                                        </div>                               
                             </div>
                         </div>
-
-
-                        <div class="chat-bar">
-                            <div class="icon-chat-bar"><i class="fa fa-smile-o" aria-hidden="true"></i></div>
-                            <input v-model="newMess" type="text" @keyup.enter="sendMess" class="textbar">
-                            <div class="icon-chat-bar"><i class="fa fa-microphone" aria-hidden="true"></i></div>
-                        </div>
-                         
+                    </div>
+                 
+                    <div class="chat-bar" v-if="active">
+                        <div class="icon-chat-bar"><i class="fa fa-smile-o" aria-hidden="true"></i></div>
+                        <input v-model="newMess" type="text" @keyup.enter="sendMess" class="chatTextBar generalTextBar">
+                        <div class="icon-chat-bar"><i class="fa fa-microphone" aria-hidden="true"></i></div>
                     </div>
             </div>
-         </div>   
+        </div>   
     
 
 </div>

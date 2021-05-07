@@ -6,6 +6,11 @@ const app = new Vue(
             newMess:"",
             active:{},
             search:"",
+            classes:"",
+
+            randomAnswers:[
+                "Ok!", "XD", "Se lo dici tu...", "Ti richiamo dopo", "Sono d'accordo", "greve"
+            ],
     
             ctcs:[
                 {name:"Michele",
@@ -124,27 +129,44 @@ const app = new Vue(
                         status: 'sent',
                         showPopup: false
                     })
-                       
-                    setTimeout(()=> {     //LA FUNZIONE NORMALE NON MANTIENE IL THIS
-                        this.active.convo.push(
-                            {
-                            date: moment().format("DD/MM/YYYY HH:mm:ss"),
-                            text: "ok",
-                            status: 'received',
-                            showPopup: false
-                            })
+                        var no = Math.floor(Math.random() * 6);
+                        setTimeout(()=> {  //LA FUNZIONE NORMALE NON MANTIENE IL THIS                          
+                            this.active.convo.push({
+                                date: moment().format("DD/MM/YYYY HH:mm:ss"),
+                                text: this.randomAnswers[no],
+                                status: 'received',
+                                showPopup: false
+                                })                    
                             this.scrollToBottom();
-                    },1000);
+                        },1000);
+
                  return this.newMess ="";
                  },
+           
+                 addClasses(sts){
+                      if(sts === 'sent'){
+                        return this.classes="sentmsg"
+                      }
+                      else if(sts === 'received'){
+                        return this.classes="receivedmsg"
+                      }
+                 },
+                 addClassesPopUp(sts){
+                    if(sts === 'sent'){
+                      return this.classes="banner-sent"
+                    }
+                    else if(sts === 'received'){
+                      return this.classes="banner-received"
+                    }
+               },
 
-                 //-----
+                 //-----------------------
                  scrollToBottom(){  //ref = id vue
                      setTimeout (()=> {
                     const htmlElement = this.$refs.chatContainerToScroll;
                     htmlElement.scrollTop = htmlElement.scrollHeight;
                      }, 100);
-                 },//-----
+                 },//------------------------
 
                 formatTime(dataString){
                     const dataFormString = moment(dataString, "DD/MM/YYYY HH:mm:ss")
@@ -156,9 +178,10 @@ const app = new Vue(
                     element.showPopup = !element.showPopup;                    
                   },
 
-                deleteItem(ToDelete) {      
-                  this.active.convo[ToDelete].text ="Questo messaggio è stato eliminato"               
-                  return  this.active.convo[ToDelete] = "";
+                deleteItem(ToDelete) {  
+                    this.active.convo.splice(ToDelete, 1)    
+                  //this.active.convo[ToDelete].text ="Questo messaggio è stato eliminato"               
+                  
                 },
         },
        
