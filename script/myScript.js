@@ -183,8 +183,22 @@ const app = new Vue(
                   //this.active.convo[ToDelete].text ="Questo messaggio è stato eliminato"               
                   
                 },
+                lastMessage(contact){                        
+                const receivedText = contact.convo.filter(( msg ) => msg.satus = 'received'); // no '==='?
+
+                    if(receivedText.length === 0 ){
+                         return "nessun messaggio da mostare";
+                    }
+                const lastMsgText= receivedText[receivedText.length - 1].text;
+
+                    if(lastMsgText.length > 20 ){
+                        let previewMsg = lastMsgText.slice(0,20) + "...";
+                        return previewMsg;
+                    }  
+
+                return lastMsgText;
+                },
         },
-       
         computed: {
             
                 filteredContacts:function(){
@@ -207,5 +221,7 @@ const app = new Vue(
                             }
                         return this.formatTime(lastMsgDate);
                 },
+            
             }
 })
+

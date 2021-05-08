@@ -16,8 +16,8 @@
 
         <div class="main">
 
-           <!--colonna 1 con contatti -->
-            <div class="col-1"> 
+           
+            <div class="col-1"> <!--colonna 1 con contatti -->
 
                 <div class="main-bar main-bar-1">         <!--barra principale -->
                     <img src="imgs/avatar_io.jpg" alt=""> 
@@ -37,29 +37,39 @@
 
 
                 <div class="contacts">  <!--inizio lista contatti con v-for -->
-                    <div class="singleCont" v-for="(contact, name, pic) in filteredContacts"  @click="openConvo(contact)" :class="{opened:contact === active}">
-                        <img v-bind:src="contact.pic" alt=""> {{contact.name}}
+
+                    <div class="singleCont" v-for="(contact, name, pic) in filteredContacts"
+                          @click="openConvo(contact)" :class="{opened:contact === active}">
+                        <img v-bind:src="contact.pic" alt="">
+                        <div>
+                            <h5>{{contact.name}}</h5>
+                            <h6>{{lastMessage(contact)}}</h6>
+                         </div>
+                        
                     </div>
+
                 </div>
             </div>
-
-            <!--seconda colonna -->
-            <div class="col-2 ">      
+            
+            <div class="col-2 ">                         <!--seconda colonna -->
                     <div v-if="active" class="relative">         <!--seconda barra principlae con info contatto selezionato-->
                         <div class="main-bar main-bar-2">        
                             <img :src="active.pic" alt="">
-                            <div class="name">{{active.name}}
-                            <p v-if="lastAccess">Ultimo accesso {{lastAccess}}</p>
+                            <div class="name">
+                                <h4>{{active.name}}</h4>
+                                <h6 v-if="lastAccess">Ultimo accesso {{lastAccess}}</h6>
                             </div>
-                             <div class="icons"> icone </div>  
+                            <div class="icons"> icone </div>  
                         </div>
                     </div>
 
+                    
                     <div class="chatSpace" ref="chatContainerToScroll">
 
                         <div v-for="(element,index ,status) in active.convo">
                             <div class="chat-row relative">
-                                                                       
+                                
+                                        
                                         <div @click="showOptions(element)" v-bind:class="addClasses(element.status)" >                                 
                                                 
                                                 <h5 class="message">{{element.text}}</h5>
