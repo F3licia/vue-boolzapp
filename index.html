@@ -13,11 +13,11 @@
 
 <body>
 <div id="vueContainer">
-
+    <div class="main-background">
         <div class="main">
 
-           
-            <div class="col-1"> <!--colonna 1 con contatti -->
+           <!--colonna 1 con contatti -->
+            <div class="col-1"> 
 
                 <div class="main-bar main-bar-1">         <!--barra principale -->
                     <img src="imgs/avatar_io.jpg" alt=""> 
@@ -28,15 +28,19 @@
                     <div class="bell"><i class="fa fa-bell-slash" aria-hidden="true"></i></div>
                     <div>
                         <h5>Ricevi notifiche di nuovi messaggi</h5>
-                        <h6>Attiva notifiche desktop</h6>
+                        <h6><u>Attiva notifiche desktop</u></h6>
                     </div>
                 </div>
                 <div class="searchBar">
-                     <input v-model="search" type="text" class="textbarSearch generalTextBar" placeholder=" &#x1F50E;&#xFE0E; Cerca o inizia una nuova chat">
+                    <input v-model="search" type="text" class="textbarSearch generalTextBar" placeholder=" &#x1F50E;&#xFE0E; Cerca o inizia una nuova chat" >
+                    <span  @click="redo">
+                         <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </span>
+                     
                 </div>
 
-
-                <div class="contacts">  <!--inizio lista contatti con v-for -->
+                 <!--inizio lista contatti con v-for -->
+                <div class="contacts">  
 
                     <div class="singleCont" v-for="(contact, name, pic) in filteredContacts"
                           @click="openConvo(contact)" :class="{opened:contact === active}">
@@ -45,13 +49,12 @@
                             <h5>{{contact.name}}</h5>
                             <h6>{{lastMessage(contact)}}</h6>
                          </div>
-                        
                     </div>
-
                 </div>
             </div>
             
-            <div class="col-2 ">                         <!--seconda colonna -->
+            <!--seconda colonna -->
+            <div class="col-2 ">                         
                     <div v-if="active" class="relative">         <!--seconda barra principlae con info contatto selezionato-->
                         <div class="main-bar main-bar-2">        
                             <img :src="active.pic" alt="">
@@ -64,29 +67,30 @@
                     </div>
 
                     
-                    <div class="chatSpace" ref="chatContainerToScroll">
+                    <div class="chatSpace" ref="chatContainerToScroll">  <!--chat container-->
 
-                        <div v-for="(element,index ,status) in active.convo">
+                        <div v-for="(element,index ,status) in active.convo">   <!--v-for che mostra i data del contatto selezionato-->
                             <div class="chat-row relative">
-                                
-                                        
+          
                                         <div @click="showOptions(element)" v-bind:class="addClasses(element.status)" >                                 
                                                 
-                                                <h5 class="message">{{element.text}}</h5>
-                                                <div class="infoMess">
-                                                    <h6>{{element.status}}&nbsp;</h6> 
-                                                    <h6 v-if="element.date">{{formatTime(element.date)}}</h6>  
-                                                </div> 
+                                                <h5 class="message">{{element.text}}</h5>        <!--singolo messaggio seguito da info-->
+                                                      
+                                                    <div class="infoMess">
+                                                        <h6>{{element.status}}&nbsp;</h6> 
+                                                        <h6 v-if="element.date">{{formatTime(element.date)}}</h6>  
+                                                    </div> 
                                         </div>
 
-                                        <div v-if="element.showPopup" v-bind:class="addClassesPopUp(element.status)">
+                                         <!--pop up su messaggi-->
+                                        <div v-if="element.showPopup" v-bind:class="addClassesPopUp(element.status)">   
                                             <h5 v-on:click="deleteItem(index)">cancella</h5>
                                         </div>                               
                             </div>
                         </div>
                     </div>
-                 
-                    <div class="chat-bar" v-if="active">
+                 <!--barra input della chat-->
+                    <div class="chat-bar" v-if="active">                 
                         <div class="icon-chat-bar"><i class="fa fa-smile-o" aria-hidden="true"></i></div>
                         <input v-model="newMess" type="text" @keyup.enter="sendMess" class="chatTextBar generalTextBar">
                         <div class="icon-chat-bar"><i class="fa fa-microphone" aria-hidden="true"></i></div>
@@ -94,7 +98,7 @@
             </div>
         </div>   
     
-
+    </div>
 </div>
 <script src="script/myScript.js"></script>
 

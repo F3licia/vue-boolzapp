@@ -159,7 +159,6 @@ const app = new Vue(
                       return this.classes="banner-received"
                     }
                },
-
                  //-----------------------
                  scrollToBottom(){  //ref = id vue
                      setTimeout (()=> {
@@ -173,7 +172,6 @@ const app = new Vue(
                     return dataFormString.format("HH:mm")
                 },
 
-         
                 showOptions(element){
                     element.showPopup = !element.showPopup;                    
                   },
@@ -184,19 +182,19 @@ const app = new Vue(
                   
                 },
                 lastMessage(contact){                        
-                const receivedText = contact.convo.filter(( msg ) => msg.satus = 'received'); // no '==='?
-
+                const receivedText = contact.convo.filter(( el ) => el.satus = 'received'); 
                     if(receivedText.length === 0 ){
                          return "nessun messaggio da mostare";
                     }
-                const lastMsgText= receivedText[receivedText.length - 1].text;
-
+                const lastMsgText = receivedText[receivedText.length - 1].text;
                     if(lastMsgText.length > 20 ){
                         let previewMsg = lastMsgText.slice(0,20) + "...";
                         return previewMsg;
                     }  
-
                 return lastMsgText;
+                },
+                redo(){
+                   return this.search = "";
                 },
         },
         computed: {
@@ -220,8 +218,8 @@ const app = new Vue(
                                 return "";
                             }
                         return this.formatTime(lastMsgDate);
-                },
-            
+                },      
+              
             }
 })
 
