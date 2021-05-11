@@ -21,19 +21,23 @@
 
                 <div class="main-bar main-bar-1">         <!--barra principale -->
                     <img src="imgs/avatar_io.jpg" alt=""> 
-                    <div class="icons"> icone </div>  
+                    <div class="icons">
+                        <i class="fa fa-circle-o-notch" aria-hidden="true"></i>
+                        <i class="fa fa-comment" aria-hidden="true"></i>
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </div>  
                </div>
                
                 <div class="notifications">
                     <div class="bell"><i class="fa fa-bell-slash" aria-hidden="true"></i></div>
-                    <div>
+                    <div>                    
                         <h5>Ricevi notifiche di nuovi messaggi</h5>
                         <h6><u>Attiva notifiche desktop</u></h6>
                     </div>
                 </div>
                 <div class="searchBar">
                     <input v-model="search" type="text" class="textbarSearch generalTextBar" placeholder=" &#x1F50E;&#xFE0E; Cerca o inizia una nuova chat" >
-                    <span  @click="redo">
+                    <span v-if="search" @click="redo" >
                          <i class="fa fa-times-circle" aria-hidden="true"></i>
                     </span>
                      
@@ -55,14 +59,18 @@
             
             <!--seconda colonna -->
             <div class="col-2 ">                         
-                    <div v-if="active" class="relative">         <!--seconda barra principlae con info contatto selezionato-->
+                    <div v-if="active" class="relative">         <!--seconda barra principale con info contatto selezionato-->
                         <div class="main-bar main-bar-2">        
                             <img :src="active.pic" alt="">
                             <div class="name">
                                 <h4>{{active.name}}</h4>
                                 <h6 v-if="lastAccess">Ultimo accesso {{lastAccess}}</h6>
                             </div>
-                            <div class="icons"> icone </div>  
+                            <div class="icons"> 
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </div>  
                         </div>
                     </div>
 

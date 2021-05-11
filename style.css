@@ -16,7 +16,10 @@
     position: absolute;
     right: 10px;
   }
-
+    .icons>*{
+    margin-left: 10px;
+    text-align: right;
+    }
 
 .main{
     position: relative;
@@ -28,8 +31,13 @@
     display: flex;
     background-color: #ededed;
 }
+.icons{
+    color:#808080;
+    margin-left: 10px;
+}
 
 .main-bar{
+
     height: 50px;
     display: flex;
     align-items: center;
@@ -80,6 +88,11 @@
         .textbarSearch{
             width: 80%;
             height: 40px;
+        }
+        .fa-times-circle{
+          position: relative;
+          right: 35px;
+          opacity:50%
         }
 
     .contacts{

@@ -7,6 +7,7 @@ const app = new Vue(
             active:{},
             search:"",
             classes:"",
+            showStyle:"",
 
             randomAnswers:[
                 "Ok!", "XD", "Se lo dici tu...", "Ti richiamo dopo", "Sono d'accordo", "greve"
@@ -201,7 +202,7 @@ const app = new Vue(
             
                 filteredContacts:function(){
                     return this.ctcs.filter((contact) => {
-                        return contact.name.toLowerCase().includes(this.search.toLowerCase());
+                        return contact.name.toLowerCase().startsWith(this.search.toLowerCase());
                     });
                 },
                        lastAccess(){         
