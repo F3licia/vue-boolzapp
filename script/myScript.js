@@ -1,4 +1,3 @@
-
 const app = new Vue(
     {
         el: '#vueContainer',
@@ -123,77 +122,82 @@ const app = new Vue(
                 this.active = contact;   
                 },
 
-                sendMess() {
+            sendMess() { //inserisce un messaggio//
+                this.active.convo.push({
+                date: moment().format("DD/MM/YYYY HH:mm:ss"),
+                text: this.newMess,
+                status: 'sent',
+                showPopup: false
+                })
+
+                var no = Math.floor(Math.random() * 6); //calcolo risposta random
+                setTimeout(()=> {                     
                     this.active.convo.push({
-                        date: moment().format("DD/MM/YYYY HH:mm:ss"),
-                        text: this.newMess,
-                        status: 'sent',
-                        showPopup: false
-                    })
-                        var no = Math.floor(Math.random() * 6);
-                        setTimeout(()=> {  //LA FUNZIONE NORMALE NON MANTIENE IL THIS                          
-                            this.active.convo.push({
-                                date: moment().format("DD/MM/YYYY HH:mm:ss"),
-                                text: this.randomAnswers[no],
-                                status: 'received',
-                                showPopup: false
-                                })                    
-                            this.scrollToBottom();
-                        },1000);
+                    date: moment().format("DD/MM/YYYY HH:mm:ss"),
+                    text: this.randomAnswers[no],  //messaggio random
+                    status: 'received',
+                    showPopup: false
+                    })                    
+                    this.scrollToBottom();          //porta la scrollbar in basso
+                },1000);
 
-                 return this.newMess ="";
-                 },
+            return this.newMess ="";  //svuota la barra messaggi
+            },
            
-                 addClasses(sts){
-                      if(sts === 'sent'){
-                        return this.classes="sentmsg"
-                      }
-                      else if(sts === 'received'){
-                        return this.classes="receivedmsg"
-                      }
-                 },
-                 addClassesPopUp(sts){
-                    if(sts === 'sent'){
-                      return this.classes="banner-sent"
-                    }
-                    else if(sts === 'received'){
-                      return this.classes="banner-received"
-                    }
-               },
-                 //-----------------------
-                 scrollToBottom(){  //ref = id vue
-                     setTimeout (()=> {
-                    const htmlElement = this.$refs.chatContainerToScroll;
-                    htmlElement.scrollTop = htmlElement.scrollHeight;
-                     }, 100);
-                 },//------------------------
+            addClasses(sts){
+                if(sts === 'sent'){
+                return this.classes="sentmsg"
+               }
+                else if(sts === 'received'){
+                return this.classes="receivedmsg"
+               }
+            },
 
-                formatTime(dataString){
-                    const dataFormString = moment(dataString, "DD/MM/YYYY HH:mm:ss")
-                    return dataFormString.format("HH:mm")
-                },
+            addClassesPopUp(sts){
+                if(sts === 'sent'){
+                return this.classes="banner-sent"
+                }
+                else if(sts === 'received'){
+                return this.classes="banner-received"
+                }
+            },   //this.classes = "banner-" + sts
 
-                showOptions(element){
-                    element.showPopup = !element.showPopup;                    
-                  },
+            
+            //-----------------------
+            scrollToBottom(){  //ref = id vue
+                setTimeout (()=> {
+                const htmlElement = this.$refs.chatContainerToScroll;
+                htmlElement.scrollTop = htmlElement.scrollHeight;
+                }, 100);
+            },//------------------------
 
-                deleteItem(ToDelete) {  
-                    this.active.convo.splice(ToDelete, 1)    
-                  //this.active.convo[ToDelete].text ="Questo messaggio è stato eliminato"               
-                  
-                },
-                lastMessage(contact){                        
+            formatTime(dataString){
+                const dataFormString = moment(dataString, "DD/MM/YYYY HH:mm:ss")
+                return dataFormString.format("HH:mm")
+            },
+
+            showOptions(element){
+                element.showPopup = !element.showPopup;                    
+            },
+
+            deleteItem(ToDelete) {  
+                this.active.convo.splice(ToDelete, 1)    
+             //this.active.convo[ToDelete].text ="Questo messaggio è stato eliminato"                               
+            },
+
+            lastMessage(contact){                        
                 const receivedText = contact.convo.filter(( el ) => el.satus = 'received'); 
                     if(receivedText.length === 0 ){
-                         return "nessun messaggio da mostare";
+                    return "nessun messaggio da mostare";
                     }
                 const lastMsgText = receivedText[receivedText.length - 1].text;
                     if(lastMsgText.length > 20 ){
-                        let previewMsg = lastMsgText.slice(0,20) + "...";
-                        return previewMsg;
-                    }  
+                    let previewMsg = lastMsgText.slice(0,20) + "...";
+                    return previewMsg;
+                }  
                 return lastMsgText;
                 },
+
                 redo(){
                    return this.search = "";
                 },
@@ -205,20 +209,21 @@ const app = new Vue(
                         return contact.name.toLowerCase().startsWith(this.search.toLowerCase());
                     });
                 },
-                       lastAccess(){         
-                            if(!this.active.convo ){
-                                return "";
-                            }
-                        const received = this.active.convo.filter(( msg ) => msg.satus = 'received'); // no '==='?
+                lastAccess(){         
+                    if(!this.active.convo ){
+                    return "";
+                    }
+                    const received = this.active.convo.filter(( msg ) => msg.satus = 'received'); // no '==='?
 
-                            if(received.length === 0 ){
-                                return "";
-                            }
-                        const lastMsgDate = received[received.length - 1].date;
-                            if(!lastMsgDate){
-                                return "";
-                            }
-                        return this.formatTime(lastMsgDate);
+                    if(received.length === 0 ){
+                    return "";
+                    }
+
+                    const lastMsgDate = received[received.length - 1].date;
+                    if(!lastMsgDate){
+                    return "";
+                    }
+                    return this.formatTime(lastMsgDate);
                 },      
               
             }

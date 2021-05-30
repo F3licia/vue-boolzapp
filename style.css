@@ -37,12 +37,10 @@
 }
 
 .main-bar{
-
     height: 50px;
     display: flex;
     align-items: center;
     background-color: #ededed;
-    
     z-index: 2;
 }
         .main-bar-1{ width: 285px;}
@@ -106,6 +104,7 @@
     height: 80px;
     border: 1px solid lightgray;
     background-color: white;
+    cursor: pointer;
     }
       .opened{
         background-color:#d7d7d7; 
@@ -118,7 +117,6 @@
 }
 
 .col-2{
-    position: relative;
     width: 80%;
     height: auto;
 }
@@ -148,7 +146,6 @@
         .icon-chat-bar{
             width:10%;
             text-align: center;
-            cursor: pointer;
         }
 
         .chatTextBar{
@@ -162,8 +159,6 @@
         background-color: white;
         border-radius: 30px;
         border: none;
-       
-        cursor: pointer;
     } 
     .generalTextBar:focus-visible{
                 outline:none;
@@ -283,4 +278,8 @@ display: flex;
     width: 100vw;
     height: calc(100vh - 30px);
     background: linear-gradient(180deg, #009788 20%, #dadbd5 20%);
+}
+
+.fa{
+    cursor: pointer;
 }
