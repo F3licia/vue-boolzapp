@@ -7,6 +7,7 @@ const app = new Vue(
             search:"",
             classes:"",
             showStyle:"",
+            nowWriting:"",
 
             randomAnswers:[
                 "Ok!", "XD", "Se lo dici tu...", "Ti richiamo dopo", "Sono d'accordo", "greve"
@@ -122,7 +123,7 @@ const app = new Vue(
                 this.active = contact;   
                 },
 
-            sendMess() { //inserisce un messaggio//
+            sendMess() {                   //inserisce un messaggio//
                 this.active.convo.push({
                 date: moment().format("DD/MM/YYYY HH:mm:ss"),
                 text: this.newMess,
@@ -130,21 +131,26 @@ const app = new Vue(
                 showPopup: false
                 })
 
+                this.nowWriting = this.active
+                /***aggiungendo una nuova variabile, "blocco" la funzione sull'utente precedentemente
+                selezionato se l'active dovesse cambiare prima della fine della funzione***/
+                
                 var no = Math.floor(Math.random() * 6); //calcolo risposta random
-                setTimeout(()=> {                     
-                    this.active.convo.push({
+                setTimeout(()=> {  
+                    
+                    this.nowWriting.convo.push({  //***** */
                     date: moment().format("DD/MM/YYYY HH:mm:ss"),
                     text: this.randomAnswers[no],  //messaggio random
                     status: 'received',
                     showPopup: false
                     })                    
-                    this.scrollToBottom();          //porta la scrollbar in basso
+                    this.scrollToBottom(); //richiama funzione auto-scroll
                 },1000);
 
-            return this.newMess ="";  //svuota la barra messaggi
+            return this.newMess ="";       //svuota la barra messaggi
             },
-           
-            addClasses(sts){
+                            
+            addClasses(sts){               //stili messaggi
                 if(sts === 'sent'){
                 return this.classes="sentmsg"
                }
@@ -153,17 +159,11 @@ const app = new Vue(
                }
             },
 
-            addClassesPopUp(sts){
-                if(sts === 'sent'){
-                return this.classes="banner-sent"
-                }
-                else if(sts === 'received'){
-                return this.classes="banner-received"
-                }
-            },   //this.classes = "banner-" + sts
-
-            
-            //-----------------------
+            addClassesPopUp(sts){          //stili pop-up (spostati a dx o sx)
+              return this.classes = "banner-" + sts
+            },   
+       
+            //-----------------------------//auto scroll
             scrollToBottom(){  //ref = id vue
                 setTimeout (()=> {
                 const htmlElement = this.$refs.chatContainerToScroll;
@@ -171,21 +171,21 @@ const app = new Vue(
                 }, 100);
             },//------------------------
 
-            formatTime(dataString){
+            formatTime(dataString){        //formatta data e ora
                 const dataFormString = moment(dataString, "DD/MM/YYYY HH:mm:ss")
                 return dataFormString.format("HH:mm")
             },
 
-            showOptions(element){
+            showOptions(element){          //mostra o nasconde pop-up
                 element.showPopup = !element.showPopup;                    
             },
 
-            deleteItem(ToDelete) {  
+            deleteItem(ToDelete) {         //formatta data e ora
                 this.active.convo.splice(ToDelete, 1)    
-             //this.active.convo[ToDelete].text ="Questo messaggio è stato eliminato"                               
+            //this.active.convo[ToDelete].text ="Questo messaggio è stato eliminato"  //alternativa con messaggio                              
             },
 
-            lastMessage(contact){                        
+            lastMessage(contact){          //ritorna l'ultimo messaggio del contatto               
                 const receivedText = contact.convo.filter(( el ) => el.satus = 'received'); 
                 if(receivedText.length === 0 ){
                 return "nessun messaggio da mostare";
@@ -204,13 +204,13 @@ const app = new Vue(
         },
         computed: {
             
-            filteredContacts:function(){
+            filteredContacts:function(){   //filtra i contatti in base alla variabile search
                 return this.ctcs.filter((contact) => {
                 return contact.name.toLowerCase().startsWith(this.search.toLowerCase());
                 });
             },
 
-            lastAccess(){         
+            lastAccess(){                 //mostra quando è stato stampato l'ultimo messaggio
                 if(!this.active.convo ){
                 return "";
                 }
