@@ -187,43 +187,44 @@ const app = new Vue(
 
             lastMessage(contact){                        
                 const receivedText = contact.convo.filter(( el ) => el.satus = 'received'); 
-                    if(receivedText.length === 0 ){
-                    return "nessun messaggio da mostare";
-                    }
+                if(receivedText.length === 0 ){
+                return "nessun messaggio da mostare";
+                }
                 const lastMsgText = receivedText[receivedText.length - 1].text;
-                    if(lastMsgText.length > 20 ){
-                    let previewMsg = lastMsgText.slice(0,20) + "...";
-                    return previewMsg;
+                if(lastMsgText.length > 20 ){
+                let previewMsg = lastMsgText.slice(0,20) + "...";
+                return previewMsg;
                 }  
-                return lastMsgText;
-                },
+            return lastMsgText;
+            },
 
-                redo(){
-                   return this.search = "";
-                },
+            redo(){
+            return this.search = "";
+            },
         },
         computed: {
             
-                filteredContacts:function(){
-                    return this.ctcs.filter((contact) => {
-                        return contact.name.toLowerCase().startsWith(this.search.toLowerCase());
-                    });
-                },
-                lastAccess(){         
-                    if(!this.active.convo ){
-                    return "";
-                    }
-                    const received = this.active.convo.filter(( msg ) => msg.satus = 'received'); // no '==='?
+            filteredContacts:function(){
+                return this.ctcs.filter((contact) => {
+                return contact.name.toLowerCase().startsWith(this.search.toLowerCase());
+                });
+            },
 
-                    if(received.length === 0 ){
-                    return "";
-                    }
+            lastAccess(){         
+                if(!this.active.convo ){
+                return "";
+                }
+                const received = this.active.convo.filter(( msg ) => msg.satus = 'received'); // no '==='?
 
-                    const lastMsgDate = received[received.length - 1].date;
-                    if(!lastMsgDate){
-                    return "";
-                    }
-                    return this.formatTime(lastMsgDate);
+                if(received.length === 0 ){
+                return "";
+                }
+
+                const lastMsgDate = received[received.length - 1].date;
+                if(!lastMsgDate){
+                return "";
+                }
+                return this.formatTime(lastMsgDate);
                 },      
               
             }
